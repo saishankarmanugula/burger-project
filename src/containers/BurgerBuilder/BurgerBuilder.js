@@ -21,10 +21,11 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchasable: false
+        purchasable: false,
+        purchased: false // property to track click of order button
     };
 
-    updatePurchaseState (ingredients) {
+    updatePurchaseState(ingredients) {
         const sum = Object.keys(ingredients).map((key) => {
             return ingredients[key];
         }).reduce((sum, el) => {
@@ -57,6 +58,12 @@ class BurgerBuilder extends Component {
         this.updatePurchaseState(updatedIngredients);
     };
 
+    purchasedHandler = () => {
+        this.setState({
+            purchased: true
+        });
+    };
+
     render() {
         const disabledInfo = {
             ...this.state.ingredients
@@ -68,17 +75,18 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Modal>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                <Modal show={this.state.purchased}>
+                    <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
-               
-                <BuildControls 
-                ingredientAdded={this.addIngredientHandler}
-                ingredientRemoved={this.removeIngredientHandler}
-                disabled={disabledInfo}
-                price={this.state.totalPrice}
-                orderButtonDisabled={this.state.purchasable}/>
+
+                <BuildControls
+                    ingredientAdded={this.addIngredientHandler}
+                    ingredientRemoved={this.removeIngredientHandler}
+                    disabled={disabledInfo}
+                    price={this.state.totalPrice}
+                    orderButtonDisabled={this.state.purchasable}
+                    order={this.purchasedHandler} />
             </Aux>
         );
     }
