@@ -33,6 +33,8 @@ class BurgerBuilder extends Component {
             .catch(error => {
                 this.setState({error: true});
             });
+
+            console.log("checking");
     }
 
     updatePurchaseState(ingredients) {
@@ -81,38 +83,48 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        // alert('You can continue;');
-        this.setState({
-            loading: true
+        console.log(this.props);
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?meat=' + this.state.ingredients.meat +
+                    '&cheese=' + this.state.ingredients.cheese +
+                    '&bacon=' + this.state.ingredients.bacon +
+                    '&salad=' + this.state.ingredients.salad +
+                    '&totalPrice=' + this.state.totalPrice.toFixed(2)
         });
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Sai Shankar',
-                address: {
-                    street: 'kamparapu street',
-                    pincode: '533431',
-                    country: 'India'
-                },
-                email: 'saishankarmanugula@gmail.com'
-            },
-            deliveryMethod: 'fastest'
-        };
+        // alert('You can continue;');
+        // this.setState({
+        //     loading: true
+        // });
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Sai Shankar',
+        //         address: {
+        //             street: 'kamparapu street',
+        //             pincode: '533431',
+        //             country: 'India'
+        //         },
+        //         email: 'saishankarmanugula@gmail.com'
+        //     },
+        //     deliveryMethod: 'fastest'
+        // };
 
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({
-                    loading: false,
-                    purchased: false
-                });
-            })
-            .catch(error => {
-                this.setState({
-                    loading: false,
-                    purchased: false
-                });
-            });
+        // axios.post('/orders.json', order)
+        //     .then(response => {
+        //         this.setState({
+        //             loading: false,
+        //             purchased: false
+        //         });
+        //         this.props.history.push({pathname: '/checkout'});
+        //     })
+        //     .catch(error => {
+        //         this.setState({
+        //             loading: false,
+        //             purchased: false
+        //         });
+        //     });
     };
 
     render() {
