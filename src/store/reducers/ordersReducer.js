@@ -55,7 +55,7 @@ const fetchOrdersError = (state, action) => {
 };
 
 const ordersReducer = (state = initialState, action) => {
-    switch (action.type) {
+    switch ( action.type ) {
         case actionTypes.CHECKOUT_INIT: return checkoutInit(state, action);
             
         case actionTypes.ORDER_CLICK_INIT: return orderClickInit(state, action);
